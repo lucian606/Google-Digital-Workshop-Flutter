@@ -41,6 +41,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
   final toGuess = new Random().nextInt(100);
   String txt = '';
+  String valid = '09';
 
   get numController => null;
 
@@ -54,9 +55,11 @@ class MyCustomFormState extends State<MyCustomForm> {
         children: <Widget>[
           TextFormField(
             controller: numController,
+            keyboardType: TextInputType.number,
             validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter some text';
+              value = value.trim();
+              if (value.isEmpty || value.codeUnitAt(0) < valid.codeUnitAt(0) || value.codeUnitAt(0) > valid.codeUnitAt(1) || value.contains('.') || value.contains('-') || value.contains(',') || value.contains(' ')) {
+                return 'Please enter an integer';
               }
               txt = value;
               return null;
